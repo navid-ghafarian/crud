@@ -1,0 +1,18 @@
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 320px;
+$screen-sm-max: 480px;
+
+// Small tablets (portrait view)
+$screen-md-min: 481px;
+$screen-md-max: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 769px;
+$screen-lg-max: 1024px;
+
+// Large tablets and desktops
+$screen-xl-min: 1025px;
+$screen-xl-max: 1200px;
+
+// Less than Tablet size
+$screen-max-lessMobileSize: 768px;

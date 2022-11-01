@@ -1,0 +1,202 @@
+@import "./fonts";
+@import "./normalize";
+@import "./bootstrap-class";
+@import 'sweetalert2/dist/sweetalert2.min.css';
+
+body {
+    font-family: "Vazir-Light";
+    direction: rtl;
+    background-color: #ebebeb;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 2rem auto;
+
+    @include sm {
+        max-width: 90%;
+    }
+
+    @include md {
+        max-width: 75%;
+    }
+}
+
+//Calendar
+.vpd-input-group input {
+    width: 100% !important;
+}
+
+.vpd-content {
+    border-radius: 20px;
+
+    .vpd-header {
+        border-radius: 17px 17px 0 0;
+        background-color: #014f78 !important;
+
+        .vpd-year-label {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .vpd-date {
+            font-size: 20px;
+        }
+    }
+}
+
+.vpd-body {
+    .vpd-actions {
+        text-align: center;
+
+        button {
+            border-radius: 4px;
+        }
+    }
+}
+
+.vpd-input-group {
+    border: 1px solid #dadada;
+    border-radius: 15px 30px 30px 15px;
+    margin-bottom: 1rem;
+
+    .vpd-icon-btn {
+        margin: 4px;
+    }
+
+    input {
+        color: #595959;
+        border: unset;
+        padding: 7px 5px 7px 10px;
+    }
+
+    label {
+        border-radius: 25px;
+    }
+}
+
+//sweetAlert
+.swal2-title {
+    font-size: 24px !important;
+    font-weight: normal !important;
+
+    @include sm {
+        font-size: 17px !important;
+    }
+}
+
+.swal2-popup {
+    @include sm {
+        font-size: 13px !important;
+    }
+}
+
+.swal2-styled.swal2-confirm {
+    background-color: #014f78 !important;
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(1, 79, 120, 0.5) !important;
+    }
+}
+
+//show menu responsive
+.trigger-menu {
+    display: none;
+    text-align: center;
+    cursor: pointer;
+
+    @include lessMobileSize {
+        display: block;
+    }
+}
+
+//Sortable
+.sortable {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+
+    i {
+        font-size: 14px;
+        color: #939393;
+    }
+}
+
+//group action
+.group-action {
+    display: flex;
+    gap: 0.4rem;
+    width: 250px;
+    padding-top: 2rem;
+
+    @include sm {
+        display: grid;
+        width: 100%;
+        justify-content: center;
+    }
+
+    &__select {
+        color: rgb(104, 104, 104);
+        font-size: 14px;
+        padding: 0.2rem 0.4rem;
+        border: 1px solid #eaeaea;
+        border-radius: 3px;
+        font-size: 13px;
+
+        @include sm {
+            width: 150px;
+        }
+    }
+
+    &__buton {
+        padding: 0.2rem 1rem;
+        border-radius: 3px;
+        background: #014f78;
+        color: #fff;
+        font-size: 13px;
+
+        @include sm {
+            margin-top: 0.3rem;
+            width: 150px;
+        }
+    }
+}
+
+//checkbox table
+.check-table {
+    &__input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+
+        &:checked ~ .check-table__checkmark {
+            background: #f26965;
+        }
+    }
+
+    &__checkmark {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.54);
+        border-radius: 20px;
+        cursor: pointer;
+    }
+}
+
+//global-error
+.global-error {
+    z-index: 5;
+    background: #f26965;
+    padding: .4rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    &__text {
+        color: #fff;
+    }
+}
