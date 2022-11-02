@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function login(username, password) {
 
-    const response = await axios.put("/dataService", {
+    const response = await axios.put("/dataService/login", {
         username: username,
         password: password,
     });
@@ -13,7 +13,7 @@ export async function login(username, password) {
 
 export async function signup(signupData, parent = 'idk') {
 
-    const response = await axios.post("/dataService", {
+    const response = await axios.post("/dataService/signup", {
         username: signupData.username,
         signupData,
         parent
@@ -25,7 +25,7 @@ export async function signup(signupData, parent = 'idk') {
 
 export async function currentUser(username) {
 
-    const response = await axios.get(`/dataService?id=${username}`);
+    const response = await axios.get(`/dataService/current-user?id=${username}`);
 
     return response;
 
@@ -33,7 +33,7 @@ export async function currentUser(username) {
 
 export async function editUser(signupData, parent = 'idk') {
 
-    const response = await axios.put("/dataService", {
+    const response = await axios.put("/dataService/edit-user", {
         username: signupData.username,
         signupData,
         parent
@@ -46,14 +46,6 @@ export async function editUser(signupData, parent = 'idk') {
 export async function allUser() {
 
     const response = await axios.get("/dataService");
-
-    return response;
-
-}
-
-export async function logout() {
-
-    const response = await axios.put("/userProfile/logout");
 
     return response;
 
@@ -73,6 +65,5 @@ export default {
     currentUser,
     editUser,
     allUser,
-    logout,
     deleteUser,
 };

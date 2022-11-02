@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     async onSubmit(event) {
-      console.log("submited");
       this.loading = true;
 
       try {
@@ -74,7 +73,7 @@ export default {
 
         this.loading = false;
         this.$swal({
-          title: response.data.data.message,
+          title: response.data.message,
           icon: "success",
           confirmButtonText: "متوجه شدم.",
         });

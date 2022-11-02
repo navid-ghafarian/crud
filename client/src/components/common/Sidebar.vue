@@ -115,14 +115,8 @@ export default {
       this.showMenu = !this.showMenu;
     },
     async logout() {
-      try {
-        await axiosEmployee.logout();
-
-        localStorage.removeItem("logged");
-        this.$router.push({ name: "login" });
-      } catch {
-        this.modalLoading = false;
-      }
+      localStorage.removeItem("logged");
+      this.$router.push({ name: "login" });
     },
   },
 };

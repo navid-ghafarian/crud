@@ -6,9 +6,34 @@ redis.select(defaultDB);
 const messageHandling = require('./messageHandling');
 const validate = require('./validate');
 
+//login
+async function login(response, parametrId, body) {
+
+    let keys = await redis.keys(body.username);
+    if (Object.keys(keys).length === 0) {
+        messageHandling.sendMessage.message = messageHandling.message.loginFailed;
+        messageHandling.messageHandling(404, JSON.stringify(messageHandling.sendMessage), response);
+        return;
+    }
+
+    await redis.select(1);
+    redis.get(body.username, (err, key) => {
+        let password = JSON.parse(key).signupData.password;
+        if (password === body.password) {
+            messageHandling.sendMessage.message = messageHandling.message.logged;
+            messageHandling.messageHandling(200, JSON.stringify(messageHandling.sendMessage), response);
+        } else {
+            messageHandling.sendMessage.message = messageHandling.message.loginFailed;
+            messageHandling.messageHandling(404, JSON.stringify(messageHandling.sendMessage), response);
+        }
+    });
+
+    return;
+
+}
 
 //signUp
-async function signUp(response, parametrId, body) {
+async function signUp(response, parameter, body) {
 
     let id, parent, data;
 
@@ -41,8 +66,27 @@ async function signUp(response, parametrId, body) {
     return;
 }
 
-//update user information
-async function updateData(response, parametrId, body) {
+//current user
+async function currentUser(response, parametrId, body) {
+
+    let keys = await redis.keys(parametrId);
+    if (Object.keys(keys).length === 0) {
+        messageHandling.sendMessage.message = messageHandling.message.notFound;
+        messageHandling.messageHandling(404, JSON.stringify(messageHandling.sendMessage), response);
+        return;
+    }
+
+    await redis.select(1);
+    redis.get(parametrId, (err, key) => {
+        messageHandling.messageHandling(200, key, response);
+    });
+
+    return;
+
+}
+
+//edit user
+async function editUser(response, parametrId, body) {
 
     let id, parent, data;
 
@@ -56,20 +100,20 @@ async function updateData(response, parametrId, body) {
     let keys = await redis.keys(id);
     if (Object.keys(keys).length === 0) {
         messageHandling.sendMessage.message = messageHandling.message.notFound;
-        messageHandling.messageHandling(401, JSON.stringify(messageHandling.sendMessage), response);
+        messageHandling.messageHandling(404, JSON.stringify(messageHandling.sendMessage), response);
         return;
     }
 
     await redis.select(1);
     redis.set(id, data, () => {
         messageHandling.sendMessage.message = messageHandling.message.dataUpdate;
-        messageHandling.messageHandling(201, JSON.stringify(messageHandling.sendMessage), response);
+        messageHandling.messageHandling(200, JSON.stringify(messageHandling.sendMessage), response);
     });
 
     await redis.select(2);
     redis.set(id, parent, () => {
         messageHandling.sendMessage.message = messageHandling.message.dataUpdate;
-        messageHandling.messageHandling(201, JSON.stringify(messageHandling.sendMessage), response);
+        messageHandling.messageHandling(200, JSON.stringify(messageHandling.sendMessage), response);
     });
 
     return;
@@ -135,8 +179,10 @@ async function delData(response, parametrId, body) {
 }
 
 module.exports = {
+    login,
     signUp,
-    updateData,
+    currentUser,
+    editUser,
     getData,
     delData
 }

@@ -8,12 +8,9 @@ function start(route, handle) {
 
     function onRequest(req, res) {
 
-        let pathName = url.parse(req.url).pathname,
-            parameter = url.parse(req.url, true).query,
-            parametrId = parameter.id,
-            body = '',
-            method = req.method;
-
+        let pathName = url.parse(req.url).pathname.split('/'),
+            parameter = url.parse(req.url, true).query.id,
+            body = '';
 
         req.on('data', function (data) {
             body += data;
@@ -28,7 +25,7 @@ function start(route, handle) {
                 }
             }
 
-            route(pathName, handle, res, method, parametrId, body);
+            route(pathName, handle, res, parameter, body);
 
         });
     }
